@@ -1,15 +1,19 @@
- const express = require('express')
- const mongoose = require('mongoose');
- const app = express()
+const express = require('express');
+const db = require('./config/db');
+const routes = require('./routes');
 
 
- app.get('/', function (req, res) {
-   res.send('Hello World')
- })
+const PORT = 3001;
+const app = express();
 
 
- mongoose.connect('mongodb://127.0.0.1:27017/theSocial')
-   .then(() => {
-     console.log('Connected!')
-     app.listen(3000)
- });
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(routes);
+
+db.once('open', () => {
+  app.listen(PORT, () => {
+    console.log(`API server running on port ${PORT}!`);
+  });
+});

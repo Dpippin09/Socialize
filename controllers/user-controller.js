@@ -1,7 +1,7 @@
 const User = require('../models/user');
 
 // Create a new user
-exports.createUser = async (req, res) => {
+const createUser = async (req, res) => {
   try {
     const newUser = await User.create(req.body);
     res.status(201).json(newUser);
@@ -11,7 +11,7 @@ exports.createUser = async (req, res) => {
 };
 
 // Get all users
-exports.getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({});
     res.json(users);
@@ -21,7 +21,7 @@ exports.getAllUsers = async (req, res) => {
 };
 
 // Get user by ID
-exports.getUserById = async (req, res) => {
+const getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -34,7 +34,7 @@ exports.getUserById = async (req, res) => {
 };
 
 // Update user
-exports.updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!user) {
@@ -47,7 +47,7 @@ exports.updateUser = async (req, res) => {
 };
 
 // Delete user
-exports.deleteUser = async (req, res) => {
+const deleteUser = async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) {
@@ -60,7 +60,7 @@ exports.deleteUser = async (req, res) => {
 };
 
 // Add a friend
-exports.addFriend = async (req, res) => {
+const addFriend = async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(
       req.params.id,
@@ -74,7 +74,7 @@ exports.addFriend = async (req, res) => {
 };
 
 // Remove a friend
-exports.removeFriend = async (req, res) => {
+const removeFriend = async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(
       req.params.id,
@@ -86,3 +86,14 @@ exports.removeFriend = async (req, res) => {
     res.status(400).json(error);
   }
 };
+
+
+module.exports = {
+  createUser,
+  getAllUsers,
+  getUserById,
+  updateUser,
+  deleteUser,
+  addFriend,
+  removeFriend
+};  
