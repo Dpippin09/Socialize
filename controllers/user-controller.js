@@ -11,7 +11,7 @@ const createUser = async (req, res) => {
 };
 
 // Get all users
-const getAllUsers = async (req, res) => {
+const getUsers = async (req, res) => {
   try {
     const users = await User.find({});
     res.json(users);
@@ -21,7 +21,7 @@ const getAllUsers = async (req, res) => {
 };
 
 // Get user by ID
-const getUserById = async (req, res) => {
+const getSingleUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -74,7 +74,7 @@ const addFriend = async (req, res) => {
 };
 
 // Remove a friend
-const removeFriend = async (req, res) => {
+const deleteFriend = async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(
       req.params.id,
@@ -90,10 +90,10 @@ const removeFriend = async (req, res) => {
 
 module.exports = {
   createUser,
-  getAllUsers,
-  getUserById,
+  getUsers,
+  getSingleUser,
   updateUser,
   deleteUser,
   addFriend,
-  removeFriend
+  deleteFriend
 };  

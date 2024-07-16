@@ -59,6 +59,37 @@ const deleteThought = async (req, res) => {
   }
 };
 
+const createReaction = async (req, res) => {
+  try {
+    const thought = await Thought.findByIdAndUpdate(
+      req.params.thoughtId,
+      { $push: { reactions: req.body } },
+      { new: true }
+    );
+    if (!thought) {
+      return res.status(404).json({ message: 'Thought not found' });
+    }
+    res.json(thought);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+const deleteReaction = async (req, res) => {
+  try {
+    const thought = await Thought.findByIdAndUpdate(
+      req.params.thoughtId,
+      { $pull: { reactions: { reactionId: req.params.reactionId } } },
+      { new: true }
+    );
+    if (!thought) {
+      return res.status(404).json({ message: 'Thought not found' });
+    }
+    res.json(thought);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}  
 
 
 // Additional functions for managing reactions to thoughts can be added here
@@ -68,5 +99,7 @@ module.exports = {
   getAllThoughts,
   getThoughtById,
   updateThought,
-  deleteThought
+  deleteThought,
+  createReaction,
+  deleteReaction,
 };
